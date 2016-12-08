@@ -9,17 +9,20 @@ my $root = ".";
 
 my $filelist = &get_files($root);
 
+my $status = 0;
 foreach my $file (@$filelist) {
   my @lines = split("\n", `cat $file`);
   my $i = 1;
   foreach my $line (@lines) {
     if ($line =~ /[rR]egist[^e]/) {
       print STDERR "$current/$file:$i:1: error: 💢😡\n";
-      exit(2);
+      $status = 2;
     }
     $i++;
   }
 }
+
+exit($status);
 
 sub get_files {
   my $dir = shift;
